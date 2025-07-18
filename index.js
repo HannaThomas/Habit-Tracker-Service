@@ -32,12 +32,13 @@ app.get("/habits", async (req, res) => {
 // Add a new habit
 app.post("/habits", async (req, res) => {
   try {
-    const { text, icon, checked } = req.body;
+    const { text, category, checked, note } = req.body;
 
     const newHabit = new Habit({
       text,
-      icon,
-      checked
+      category,
+      checked,
+      note
     });
 
     const savedHabit = await newHabit.save();
