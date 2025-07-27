@@ -49,13 +49,17 @@ app.post("/habits", async (req, res) => {
   }
 });
 
-// Toggle habit checked status
+// Toggle habit checked status and add note
 app.patch("/habits/:id", async (req, res) => {
   try {
     const habit = await Habit.findById(req.params.id);
     if (!habit) return res.status(404).json({ message: "Habit not found" });
-
-    habit.checked = !habit.checked;
+    if(req.body.hasOwnProperty("checked")){
+      habit.checked=req.body.checked;
+    }
+    if(req.body.hasOwnProperty("note")){
+      habit.note=req.body.note;
+    }
     const updated = await habit.save();
     res.json(updated);
   } catch (err) {
